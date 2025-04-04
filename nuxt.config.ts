@@ -1,34 +1,50 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // https://nuxt.com/modules
+
   modules: [
-    '@nuxthub/core',
-    '@nuxt/eslint',
+    "@nuxt/ui-pro",
+    "@nuxthub/core",
+    "@nuxt/eslint",
+    "nuxt-auth-utils",
+    "@nuxt/fonts",
+    "@nuxt/image",
+    "nuxt-tiptap-editor"
   ],
 
-  // https://devtools.nuxt.com
   devtools: { enabled: true },
 
-  // Env variables - https://nuxt.com/docs/getting-started/configuration#environment-variables-and-private-tokens
+  css: [
+    "~/assets/css/main.css"
+  ],
+
   runtimeConfig: {
     public: {
-      // Can be overridden by NUXT_PUBLIC_HELLO_TEXT environment variable
-      helloText: 'Hello from the Edge 👋',
-    },
+      baseUrl: process.env.NUXT_PUBLIC_BASE_URL || "http://localhost:3000"
+    }
   },
-  // https://nuxt.com/docs/getting-started/upgrade#testing-nuxt-4
+
   future: { compatibilityVersion: 4 },
-  compatibilityDate: '2024-07-30',
 
-  // https://hub.nuxt.com/docs/getting-started/installation#options
-  hub: {},
+  experimental: {
+    componentIslands: true
+  },
+  compatibilityDate: "2024-07-30",
 
-  // https://eslint.nuxt.com
+  hub: {
+    database: true
+  },
+
   eslint: {
     config: {
       stylistic: {
-        quotes: 'single',
-      },
-    },
+        semi: true,
+        quotes: "double",
+        commaDangle: "never"
+      }
+    }
   },
-})
+
+  tiptap: {
+    prefix: "Tiptap"
+  }
+});
