@@ -20,7 +20,7 @@ const open = ref(true);
           color="neutral"
           variant="ghost"
           icon="i-lucide-file-text"
-          :to="`/admin/pages/edit/${page.id}`"
+          :to="`/admin/content/pages/${page.id}`"
         >
           {{ page.title || "MISSING TITLE" }}
           <AdminPagesStatusBadge
@@ -39,7 +39,7 @@ const open = ref(true);
             variant="ghost"
             color="neutral"
             :ui="{
-              leadingIcon: [open ? 'rotate-180' : '', 'transition-transform duration-200']
+              leadingIcon: (open ? 'rotate-180' : '') + ' transition-transform duration-200'
             }"
             @click="open = !open"
           />
@@ -48,7 +48,7 @@ const open = ref(true);
             size="sm"
             variant="soft"
             color="neutral"
-            :to="`/admin/pages/new?parent=${page.id}`"
+            :to="`/admin/content/pages/new?parent=${page.id}`"
           />
         </div>
       </div>

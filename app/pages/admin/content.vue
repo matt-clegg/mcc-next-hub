@@ -6,27 +6,20 @@ definePageMeta({
 const links = [[{
   label: "Pages",
   icon: "i-lucide-file-text",
-  to: "/admin/pages",
-  exact: true
-}, {
-  label: "Members",
-  icon: "i-lucide-users",
-  to: "/settings/members"
-}, {
-  label: "Notifications",
-  icon: "i-lucide-bell",
-  to: "/settings/notifications"
-}, {
-  label: "Security",
-  icon: "i-lucide-shield",
-  to: "/settings/security"
-}]];
+  to: "/admin/content/pages"
+},
+{
+  label: "Navigation",
+  icon: "i-lucide-folder-tree",
+  to: "/admin/content/navigation"
+}
+]];
 </script>
 
 <template>
-  <UDashboardPanel id="settings" :ui="{ body: 'lg:py-12' }">
+  <UDashboardPanel id="pages" :ui="{ body: 'lg:py-12' }">
     <template #header>
-      <UDashboardNavbar title="Settings">
+      <UDashboardNavbar title="Content">
         <template #leading>
           <UDashboardSidebarCollapse />
         </template>

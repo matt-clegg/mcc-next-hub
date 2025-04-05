@@ -21,7 +21,7 @@ const { data: pages } = await useFetch<AdminPage[]>("/api/admin/pages");
           >Click the plus icon to add a new child page</span>
         </div>
         <UButton
-          to="/admin/pages/new"
+          to="/admin/content/pages/new"
           color="neutral"
           variant="soft"
           icon="i-lucide-plus"

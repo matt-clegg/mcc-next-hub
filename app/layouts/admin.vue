@@ -11,12 +11,30 @@ const links = [[{
     open.value = false;
   }
 }, {
-  label: "Pages",
-  icon: "i-lucide-file-text",
-  to: "/admin/pages",
-  onSelect: () => {
-    open.value = false;
-  }
+  label: "Content",
+  icon: "i-lucide-files",
+  defaultOpen: true,
+  children: [
+    {
+      label: "Pages",
+      icon: "i-lucide-file-text",
+      to: "/admin/content/pages",
+      onSelect: () => {
+        open.value = false;
+      }
+    },
+    {
+      label: "Navigation",
+      icon: "i-lucide-folder-tree",
+      to: "/admin/content/navigation",
+      onSelect: () => {
+        open.value = false;
+      }
+    }
+  ]
+  // onSelect: () => {
+  //   open.value = false;
+  // }
 }
 //   {
 //   label: "Customers",
