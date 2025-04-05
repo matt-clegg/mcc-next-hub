@@ -94,7 +94,12 @@ async function onTryDelete() {
         <AdminPagesStatusBadge :page="page!" />
       </div>
     </template>
-    <UPageCard>
+    <UPageCard
+      :ui="{
+        root: 'ring-0 md:ring',
+        container: 'p-0 sm:p-0 md:p-6'
+      }"
+    >
       <AdminPagesForm
         title="Edit page"
         :schema="pageSchema"

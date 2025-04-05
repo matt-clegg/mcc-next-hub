@@ -7,7 +7,7 @@ const props = defineProps<{
   schema: unknown;
   state: T;
   loading: boolean;
-  parent?: AdminPage;
+  parent?: AdminPage | null;
 }>();
 
 const emits = defineEmits<{
@@ -74,9 +74,9 @@ async function onTitleBlur() {
 const overlay = useOverlay();
 const confirmDraftModal = overlay.create(LazyModalConfirm, {
   props: {
-    title: "Unpublish Page?",
+    title: "Unpublish page?",
     bodyText: "Once unpublished, visitors will no longer have access and will see a 404 page. Are you sure you want to proceed?",
-    okLabel: "Yes, Unpublish"
+    okLabel: "Yes, unpublish"
   }
 });
 
@@ -84,7 +84,7 @@ const confirmPublishModal = overlay.create(LazyModalConfirm, {
   props: {
     title: "Publish Page?",
     bodyText: "Publishing this page will make it publicly visible to all visitors. Are you sure you want to proceed?",
-    okLabel: "Yes, Publish"
+    okLabel: "Yes, publish"
   }
 });
 
@@ -134,7 +134,7 @@ async function saveAsPublished() {
     </UFormField>
 
     <UFormField
-      label="Page Url"
+      label="Page url"
       :error="urlValid ? undefined : 'This url is already in use, please change the page title.'"
     >
       <component
@@ -157,16 +157,12 @@ async function saveAsPublished() {
       label="Content"
       required
     >
-      <!--      <RichTextEditor -->
-      <!--        v-model="state.content" -->
-      <!--      /> -->
-
       <RichTextEditorTiptap
-        v-model="state.content"
+        v-model="state.content!"
       />
     </UFormField>
 
-    <div class="flex gap-3 flex-col sm:flex-row">
+    <div class="flex gap-3 flex-col sm:flex-row pt-3">
       <UButton
         color="neutral"
         class="w-full sm:w-auto flex items-center justify-center"

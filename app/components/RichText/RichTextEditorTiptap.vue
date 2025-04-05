@@ -6,8 +6,19 @@ import { LazyRichTextLinkPickerModal } from "#components";
 
 const content = defineModel<string>({ required: true });
 
+function readContent() {
+  try {
+    return JSON.parse(content.value);
+  }
+  catch (err) {
+    console.error("Error reading content:", err);
+  }
+
+  return "";
+}
+
 const editor = useEditor({
-  content: content.value ? JSON.parse(content.value) : "",
+  content: content.value ? readContent() : "",
   extensions: [
     TiptapStarterKit,
     Underline,
@@ -54,218 +65,160 @@ function insertFileDownload() {
       fileSize: "100kb"
     });
 }
+
+type Button = {
+  icon: string;
+  tooltip?: string;
+  disabled: () => boolean;
+  active: () => boolean;
+  click: () => void;
+};
+
+const buttons: Button[][] = [
+  [
+    {
+      icon: "i-lucide-bold",
+      tooltip: "Toggle bold",
+      disabled: () => !(editor.value?.can().chain().focus().toggleBold().run() ?? true),
+      active: () => editor.value?.isActive("bold") ?? false,
+      click: () => editor.value?.chain().focus().toggleBold().run()
+    },
+    {
+      icon: "i-lucide-italic",
+      tooltip: "Toggle italic",
+      disabled: () => !(editor.value?.can().chain().focus().toggleItalic().run() ?? true),
+      active: () => editor.value?.isActive("italic") ?? false,
+      click: () => editor.value?.chain().focus().toggleItalic().run()
+    },
+    {
+      icon: "i-lucide-underline",
+      tooltip: "Toggle underline",
+      disabled: () => !(editor.value?.can().chain().focus().toggleUnderline().run() ?? true),
+      active: () => editor.value?.isActive("underline") ?? false,
+      click: () => editor.value?.chain().focus().toggleUnderline().run()
+    },
+    {
+      icon: "i-lucide-strikethrough",
+      tooltip: "Toggle strikethrough",
+      disabled: () => !(editor.value?.can().chain().focus().toggleStrike().run() ?? true),
+      active: () => editor.value?.isActive("strike") ?? false,
+      click: () => editor.value?.chain().focus().toggleStrike().run()
+    }
+  ],
+  [
+    {
+      icon: "i-lucide-list",
+      tooltip: "Toggle unordered list",
+      disabled: () => !(editor.value?.can().chain().focus().toggleBulletList().run() ?? true),
+      active: () => editor.value?.isActive("bulletList") ?? false,
+      click: () => editor.value?.chain().focus().toggleBulletList().run()
+    },
+    {
+      icon: "i-lucide-list-ordered",
+      tooltip: "Toggle ordered list",
+      disabled: () => !(editor.value?.can().chain().focus().toggleOrderedList().run() ?? true),
+      active: () => editor.value?.isActive("orderedList") ?? false,
+      click: () => editor.value?.chain().focus().toggleOrderedList().run()
+    }
+  ],
+  [
+    {
+      icon: "i-lucide-heading-2",
+      disabled: () => !(editor.value?.can().toggleHeading({ level: 2 }) ?? true),
+      active: () => editor.value?.isActive("heading", { level: 2 }) ?? false,
+      click: () => editor.value?.chain().focus().toggleHeading({ level: 2 }).run()
+    },
+    {
+      icon: "i-lucide-heading-3",
+      disabled: () => !(editor.value?.can().toggleHeading({ level: 3 }) ?? true),
+      active: () => editor.value?.isActive("heading", { level: 3 }) ?? false,
+      click: () => editor.value?.chain().focus().toggleHeading({ level: 3 }).run()
+    },
+    {
+      icon: "i-lucide-heading-4",
+      disabled: () => !(editor.value?.can().toggleHeading({ level: 4 }) ?? true),
+      active: () => editor.value?.isActive("heading", { level: 4 }) ?? false,
+      click: () => editor.value?.chain().focus().toggleHeading({ level: 4 }).run()
+    }
+  ],
+  [
+    {
+      icon: "i-lucide-link",
+      tooltip: "Insert link",
+      disabled: () => false,
+      active: () => editor.value?.isActive("link") ?? false,
+      click: onLinkClick
+    },
+    {
+      icon: "i-lucide-unlink",
+      tooltip: "Remove link",
+      disabled: () => !(editor.value?.can().chain().focus().unsetLink().run() ?? true),
+      active: () => false,
+      click: () => editor.value?.chain().focus().unsetLink().run()
+    }
+  ]
+];
 </script>
 
 <template>
-  <div>
-    <div v-if="editor">
-      <div class="flex gap-2">
-        <div>
+  <div class="space-y-2">
+    <div class="flex gap-2 flex-wrap">
+      <template v-for="(buttonGroup, index) in buttons" :key="index">
+        <div
+          v-for="(button, buttonIndex) in buttonGroup"
+          :key="buttonIndex"
+        >
+          <UTooltip
+            v-if="button.tooltip"
+            :text="button.tooltip"
+            arrow
+            :content="{
+              side: 'top'
+            }"
+          >
+            <UButton
+              variant="ghost"
+              color="neutral"
+              active-variant="soft"
+              :icon="button.icon"
+              :disabled="button.disabled()"
+              :active="button.active()"
+              @click="button.click()"
+            />
+          </UTooltip>
           <UButton
+            v-else
             variant="ghost"
             color="neutral"
             active-variant="soft"
-            icon="i-lucide-bold"
-            :disabled="!editor.can().chain().focus().toggleBold().run()"
-            :active="editor.isActive('bold')"
-            @click="editor.chain().focus().toggleBold().run()"
-          />
-
-          <UButton
-            variant="ghost"
-            color="neutral"
-            active-variant="soft"
-            icon="i-lucide-italic"
-            :disabled="!editor.can().chain().focus().toggleItalic().run()"
-            :active="editor.isActive('italic')"
-            @click="editor.chain().focus().toggleItalic().run()"
-          />
-
-          <UButton
-            variant="ghost"
-            color="neutral"
-            active-variant="soft"
-            icon="i-lucide-underline"
-            :disabled="!editor.can().chain().focus().toggleUnderline().run()"
-            :active="editor.isActive('underline')"
-            @click="editor.chain().focus().toggleUnderline().run()"
-          />
-
-          <UButton
-            variant="ghost"
-            color="neutral"
-            active-variant="soft"
-            icon="i-lucide-strikethrough"
-            :disabled="!editor.can().chain().focus().toggleStrike().run()"
-            :active="editor.isActive('strike')"
-            @click="editor.chain().focus().toggleStrike().run()"
-          />
-
-          <UButton
-            variant="ghost"
-            color="neutral"
-            active-variant="soft"
-            icon="i-lucide-link"
-            :active="editor.isActive('link')"
-            @click="onLinkClick"
+            :icon="button.icon"
+            :disabled="button.disabled()"
+            :active="button.active()"
+            @click="button.click()"
           />
         </div>
 
         <USeparator
+          v-if="index < buttons.length - 1"
           orientation="vertical"
           class="h-auto"
         />
+      </template>
+    </div>
 
-        <div>
-          <UButton
-            variant="ghost"
-            color="neutral"
-            active-variant="soft"
-            icon="i-lucide-heading-1"
-            :disabled="!editor.can().toggleHeading({ level: 1 })"
-            :active="editor.isActive('heading', { level: 1 })"
-            @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-          />
-          <UButton
-            variant="ghost"
-            color="neutral"
-            active-variant="soft"
-            icon="i-lucide-heading-2"
-            :disabled="!editor.can().toggleHeading({ level: 2 })"
-            :active="editor.isActive('heading', { level: 2 })"
-            @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-          />
-          <UButton
-            variant="ghost"
-            color="neutral"
-            active-variant="soft"
-            icon="i-lucide-heading-3"
-            :disabled="!editor.can().toggleHeading({ level: 3 })"
-            :active="editor.isActive('heading', { level: 3 })"
-            @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-          />
+    <div class="flex ring ring-(--ui-border-accented) rounded-lg overflow-hidden">
+      <div class="flex flex-grow min-h-[93px] max-h-[400px] justify-center overflow-auto">
+        <div
+          v-if="editor"
+          class="prose prose-p:mt-2 flex-grow"
+        >
+          <TiptapEditorContent :editor="editor" />
         </div>
-
-        <USeparator
-          orientation="vertical"
-          class="h-auto"
-        />
-
-        <div>
-          <UButton
-            variant="ghost"
-            color="neutral"
-            active-variant="soft"
-            icon="i-lucide-file-down"
-            :disabled="!editor.can().toggleHeading({ level: 3 })"
-            :active="editor.isActive('heading', { level: 3 })"
-            @click="insertFileDownload"
-          />
+        <div v-else class="flex items-center justify-center flex-grow bg-(--ui-bg-accented)/20">
+          <UIcon name="i-lucide-loader-circle" class="animate-spin size-6 text-(--ui-text-muted)" />
         </div>
       </div>
-      <!--      <UButton -->
-      <!--        :disabled="!editor.can().chain().focus().toggleCode().run()" -->
-      <!--        :class="{ 'is-active': editor.isActive('code') }" -->
-      <!--        @click="editor.chain().focus().toggleCode().run()" -->
-      <!--      > -->
-      <!--        code -->
-      <!--      </UButton> -->
-      <!--      <UButton @click="editor.chain().focus().unsetAllMarks().run()"> -->
-      <!--        clear marks -->
-      <!--      </UButton> -->
-      <!--      <UButton @click="editor.chain().focus().clearNodes().run()"> -->
-      <!--        clear nodes -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('paragraph') }" -->
-      <!--        @click="editor.chain().focus().setParagraph().run()" -->
-      <!--      > -->
-      <!--        paragraph -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }" -->
-      <!--        @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" -->
-      <!--      > -->
-      <!--        h1 -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }" -->
-      <!--        @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" -->
-      <!--      > -->
-      <!--        h2 -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }" -->
-      <!--        @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" -->
-      <!--      > -->
-      <!--        h3 -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }" -->
-      <!--        @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" -->
-      <!--      > -->
-      <!--        h4 -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }" -->
-      <!--        @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" -->
-      <!--      > -->
-      <!--        h5 -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }" -->
-      <!--        @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" -->
-      <!--      > -->
-      <!--        h6 -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('bulletList') }" -->
-      <!--        @click="editor.chain().focus().toggleBulletList().run()" -->
-      <!--      > -->
-      <!--        bullet list -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('orderedList') }" -->
-      <!--        @click="editor.chain().focus().toggleOrderedList().run()" -->
-      <!--      > -->
-      <!--        ordered list -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('codeBlock') }" -->
-      <!--        @click="editor.chain().focus().toggleCodeBlock().run()" -->
-      <!--      > -->
-      <!--        code block -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :class="{ 'is-active': editor.isActive('blockquote') }" -->
-      <!--        @click="editor.chain().focus().toggleBlockquote().run()" -->
-      <!--      > -->
-      <!--        blockquote -->
-      <!--      </UButton> -->
-      <!--      <UButton @click="editor.chain().focus().setHorizontalRule().run()"> -->
-      <!--        horizontal rule -->
-      <!--      </UButton> -->
-      <!--      <UButton @click="editor.chain().focus().setHardBreak().run()"> -->
-      <!--        hard break -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :disabled="!editor.can().chain().focus().undo().run()" -->
-      <!--        @click="editor.chain().focus().undo().run()" -->
-      <!--      > -->
-      <!--        undo -->
-      <!--      </UButton> -->
-      <!--      <UButton -->
-      <!--        :disabled="!editor.can().chain().focus().redo().run()" -->
-      <!--        @click="editor.chain().focus().redo().run()" -->
-      <!--      > -->
-      <!--        redo -->
-      <!--      </UButton> -->
     </div>
-    <div class="prose">
-      <TiptapEditorContent :editor="editor" />
-    </div>
-
-    <pre>{{ content }}</pre>
   </div>
 </template>
 
@@ -274,5 +227,9 @@ function insertFileDownload() {
   margin-top: .5rem;
   padding: .8rem;
   border-radius: .25rem;
+}
+
+.tiptap:focus-visible {
+  outline: none;
 }
 </style>

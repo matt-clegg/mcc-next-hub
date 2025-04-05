@@ -5,35 +5,6 @@ definePageMeta({
 });
 
 const { data: pages } = await useFetch<AdminPage[]>("/api/admin/pages");
-
-const items = computed(() => {
-  const result = pages.value?.map(mapToNavItem) ?? [];
-
-  result.push({
-    label: "Add new page",
-    icon: "i-lucide-plus",
-    to: "/admin/pages/new"
-  });
-
-  return result;
-});
-
-function mapToNavItem(page: Page) {
-  const item = {
-    label: page.title,
-    icon: "i-lucide-file-text",
-    to: `/admin/pages/edit/${page.id}`,
-    defaultOpen: false,
-    children: []
-  };
-
-  if (page.children) {
-    item.defaultOpen = true;
-    item.children = page.children.map(mapToNavItem);
-  }
-
-  return item;
-}
 </script>
 
 <template>
@@ -65,18 +36,16 @@ function mapToNavItem(page: Page) {
       :pages="pages"
       class="w-full"
     />
-    <!--    <UNavigationMenu -->
-    <!--      orientation="vertical" -->
-    <!--      :items="items" -->
-    <!--    > -->
-    <!--      <template #item-trailing="{ item }"> -->
-    <!--        trailing -->
-    <!--      </template> -->
-    <!--    </UNavigationMenu> -->
+    <div
+      v-else
+      class="flex justify-center items-center flex-col gap-2 py-10"
+    >
+      <UIcon name="i-lucide-file-question" class="size-10 text-(--ui-text-muted)/50" />
+      <span class="text-(--ui-text-muted)">
+        No pages yet, why not add one?
+      </span>
+    </div>
   </UPageCard>
-  <!--  <pre>{{ pages }}</pre> -->
-
-  <!--    <LazyAdminPagesCreateModal v-model:open="newPageModalOpen" /> -->
 </template>
 
 <style scoped>

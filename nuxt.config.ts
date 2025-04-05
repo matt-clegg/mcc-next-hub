@@ -8,7 +8,8 @@ export default defineNuxtConfig({
     "nuxt-auth-utils",
     "@nuxt/fonts",
     "@nuxt/image",
-    "nuxt-tiptap-editor"
+    "nuxt-tiptap-editor",
+    "nuxt-authorization"
   ],
 
   devtools: { enabled: true },

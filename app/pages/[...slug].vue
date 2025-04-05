@@ -34,13 +34,13 @@ useHead({
   title: page.value.title
 });
 
-const content = computed<JSONContent>(() => JSON.parse(page.value.content) as JSONContent);
+const content = computed<JSONContent>(() => JSON.parse(page.value!.content) as JSONContent);
 </script>
 
 <template>
-  <UContainer>
+  <UContainer class="prose prose-p:mt-2 prose-li:m-0 max-w-3xl">
     <UPage>
-      <UPageHeader :title="page.title" />
+      <UPageHeader :title="page!.title" />
       <UPageBody>
         <RichTextRenderer
           :data="content"

@@ -24,7 +24,7 @@ async function onSave() {
     parent.value = "";
   }
   catch (e: any) {
-    console.error("Error saving page");
+    console.error("Error saving page", e);
   }
   finally {
     loading.value = false;
@@ -36,6 +36,9 @@ async function onSave() {
   <div class="centered">
     <UButton to="/admin">
       Admin
+    </UButton>
+    <UButton to="/memberships">
+      Memberships
     </UButton>
 
     <UCard>

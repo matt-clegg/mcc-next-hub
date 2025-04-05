@@ -5,7 +5,7 @@ export default eventHandler(async (event) => {
     id: z.string()
   }).parse);
 
-  return useDrizzle()
+  const result = useDrizzle()
     .query
     .pages
     .findFirst({
@@ -14,8 +14,13 @@ export default eventHandler(async (event) => {
         parent: true
       }
     });
-  // .select()
-  // .from(tables.pages)
-  // .where(eq(tables.pages.id, id))
-  // .get();
+
+  if (!result) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Page not found"
+    });
+  }
+
+  return result;
 });
