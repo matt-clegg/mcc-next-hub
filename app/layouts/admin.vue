@@ -3,39 +3,63 @@ const route = useRoute();
 
 const open = ref(false);
 
-const links = [[{
-  label: "Home",
-  icon: "i-lucide-house",
-  to: "/",
-  onSelect: () => {
-    open.value = false;
-  }
-}, {
-  label: "Content",
-  icon: "i-lucide-files",
-  defaultOpen: true,
-  children: [
-    {
-      label: "Pages",
-      icon: "i-lucide-file-text",
-      to: "/admin/content/pages",
-      onSelect: () => {
-        open.value = false;
-      }
-    },
-    {
-      label: "Navigation",
-      icon: "i-lucide-folder-tree",
-      to: "/admin/content/navigation",
-      onSelect: () => {
-        open.value = false;
-      }
+const links = [[
+  {
+    label: "Home",
+    icon: "i-lucide-house",
+    to: "/admin",
+    exact: true,
+    onSelect: () => {
+      open.value = false;
     }
-  ]
-  // onSelect: () => {
-  //   open.value = false;
-  // }
-}
+  },
+  {
+    label: "Content",
+    icon: "i-lucide-files",
+    defaultOpen: true,
+    children: [
+      {
+        label: "Pages",
+        icon: "i-lucide-file-text",
+        to: "/admin/content/pages",
+        onSelect: () => {
+          open.value = false;
+        }
+      },
+      {
+        label: "Navigation",
+        icon: "i-lucide-folder-tree",
+        to: "/admin/content/navigation",
+        onSelect: () => {
+          open.value = false;
+        }
+      }
+    ]
+  },
+  {
+    label: "User manager",
+    icon: "i-lucide-book-user",
+    defaultOpen: true,
+    children: [
+      {
+        label: "Users",
+        icon: "i-lucide-users",
+        to: "/admin/users",
+        exact: true,
+        onSelect: () => {
+          open.value = false;
+        }
+      },
+      {
+        label: "Roles",
+        icon: "i-lucide-shield-user",
+        to: "/admin/users/roles",
+        onSelect: () => {
+          open.value = false;
+        }
+      }
+    ]
+  }
 //   {
 //   label: "Customers",
 //   icon: "i-lucide-users",

@@ -16,7 +16,7 @@ importers:
         version: 1.9.0(db0@0.3.1(@libsql/client@0.14.0)(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250404.0)(@libsql/client@0.14.0)(gel@2.0.0)))(ioredis@5.6.0)(magicast@0.3.5)
       '@nuxt/ui-pro':
         specifier: ^3.0.2
-        version: 3.0.2(@babel/parser@7.26.10)(change-case@5.4.4)(db0@0.3.1(@libsql/client@0.14.0)(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250404.0)(@libsql/client@0.14.0)(gel@2.0.0)))(embla-carousel@8.5.2)(encoding@0.1.13)(ioredis@5.6.0)(magicast@0.3.5)(typescript@5.8.2)(vite@6.2.5(@types/node@22.8.1)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.34.1)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))(zod@3.24.2)
+        version: 3.0.2(@babel/parser@7.26.10)(change-case@5.4.4)(db0@0.3.1(@libsql/client@0.14.0)(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250404.0)(@libsql/client@0.14.0)(gel@2.0.0)))(embla-carousel@8.5.2)(encoding@0.1.13)(ioredis@5.6.0)(magicast@0.3.5)(sortablejs@1.15.6)(typescript@5.8.2)(vite@6.2.5(@types/node@22.8.1)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.34.1)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))(zod@3.24.2)
       '@nuxthub/core':
         specifier: ^0.8.23
         version: 0.8.23(db0@0.3.1(@libsql/client@0.14.0)(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250404.0)(@libsql/client@0.14.0)(gel@2.0.0)))(ioredis@5.6.0)(magicast@0.3.5)(vite@6.2.5(@types/node@22.8.1)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.34.1)(yaml@2.7.0))
@@ -53,6 +53,9 @@ importers:
       nuxt-tiptap-editor:
         specifier: 2.1.4
         version: 2.1.4(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))(@tiptap/extension-code-block@2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))(@tiptap/pm@2.11.5))(highlight.js@11.11.1)(magicast@0.3.5)(vue@3.5.13(typescript@5.8.2))
+      sortablejs-vue3:
+        specifier: ^1.2.11
+        version: 1.2.11(sortablejs@1.15.6)(vue@3.5.13(typescript@5.8.2))
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.2)
@@ -62,6 +65,9 @@ importers:
       zod:
         specifier: ^3.24.2
         version: 3.24.2
+      zod-validation-error:
+        specifier: ^3.4.0
+        version: 3.4.0(zod@3.24.2)
     devDependencies:
       '@iconify-json/lucide':
         specifier: ^1.2.34
@@ -5401,6 +5407,15 @@ packages:
   smob@1.5.0:
     resolution: {integrity: sha512-g6T+p7QO8npa+/hNx9ohv1E5pVCmWrVCUzUXJyLdMmftX6ER0oiWY/w9knEonLpnOp6b6FenKnMfR8gqwWdwig==}
 
+  sortablejs-vue3@1.2.11:
+    resolution: {integrity: sha512-oKOA6N7yu2ktmqYXPHlPTQWbe9G4v16mn5ewogb+Ybc9Bk1Y+MIURrpbgedEv7f9TS5Bptvh81HGjazh5FEyJw==}
+    peerDependencies:
+      sortablejs: ^1.15.0
+      vue: ^3.2.25
+
+  sortablejs@1.15.6:
+    resolution: {integrity: sha512-aNfiuwMEpfBM/CN6LY0ibyhxPfPbyFeBTYJKCvzkJ2GkUpazIt3H+QIPAMHwqQ7tMKaHz1Qj+rJJCqljnf4p3A==}
+
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -6185,6 +6200,12 @@ packages:
   zip-stream@6.0.1:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
+
+  zod-validation-error@3.4.0:
+    resolution: {integrity: sha512-ZOPR9SVY6Pb2qqO5XHt+MkkTRxGXb4EVtnjc9JpXUOtUB1T9Ru7mZOT361AN3MsetVe7R0a1KZshJDZdgp9miQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      zod: ^3.18.0
 
   zod@3.22.3:
     resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
@@ -7646,11 +7667,11 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@nuxt/ui-pro@3.0.2(@babel/parser@7.26.10)(change-case@5.4.4)(db0@0.3.1(@libsql/client@0.14.0)(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250404.0)(@libsql/client@0.14.0)(gel@2.0.0)))(embla-carousel@8.5.2)(encoding@0.1.13)(ioredis@5.6.0)(magicast@0.3.5)(typescript@5.8.2)(vite@6.2.5(@types/node@22.8.1)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.34.1)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))(zod@3.24.2)':
+  '@nuxt/ui-pro@3.0.2(@babel/parser@7.26.10)(change-case@5.4.4)(db0@0.3.1(@libsql/client@0.14.0)(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250404.0)(@libsql/client@0.14.0)(gel@2.0.0)))(embla-carousel@8.5.2)(encoding@0.1.13)(ioredis@5.6.0)(magicast@0.3.5)(sortablejs@1.15.6)(typescript@5.8.2)(vite@6.2.5(@types/node@22.8.1)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.34.1)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))(zod@3.24.2)':
     dependencies:
       '@nuxt/kit': 3.16.1(magicast@0.3.5)
       '@nuxt/schema': 3.16.1
-      '@nuxt/ui': 3.0.2(@babel/parser@7.26.10)(change-case@5.4.4)(db0@0.3.1(@libsql/client@0.14.0)(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250404.0)(@libsql/client@0.14.0)(gel@2.0.0)))(embla-carousel@8.5.2)(encoding@0.1.13)(ioredis@5.6.0)(magicast@0.3.5)(typescript@5.8.2)(vite@6.2.5(@types/node@22.8.1)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.34.1)(yaml@2.7.0))(zod@3.24.2)
+      '@nuxt/ui': 3.0.2(@babel/parser@7.26.10)(change-case@5.4.4)(db0@0.3.1(@libsql/client@0.14.0)(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250404.0)(@libsql/client@0.14.0)(gel@2.0.0)))(embla-carousel@8.5.2)(encoding@0.1.13)(ioredis@5.6.0)(magicast@0.3.5)(sortablejs@1.15.6)(typescript@5.8.2)(vite@6.2.5(@types/node@22.8.1)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.34.1)(yaml@2.7.0))(zod@3.24.2)
       '@standard-schema/spec': 1.0.0
       '@vueuse/core': 13.0.0(vue@3.5.13(typescript@5.8.2))
       consola: 3.4.2
@@ -7707,7 +7728,7 @@ snapshots:
       - vite
       - vue
 
-  '@nuxt/ui@3.0.2(@babel/parser@7.26.10)(change-case@5.4.4)(db0@0.3.1(@libsql/client@0.14.0)(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250404.0)(@libsql/client@0.14.0)(gel@2.0.0)))(embla-carousel@8.5.2)(encoding@0.1.13)(ioredis@5.6.0)(magicast@0.3.5)(typescript@5.8.2)(vite@6.2.5(@types/node@22.8.1)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.34.1)(yaml@2.7.0))(zod@3.24.2)':
+  '@nuxt/ui@3.0.2(@babel/parser@7.26.10)(change-case@5.4.4)(db0@0.3.1(@libsql/client@0.14.0)(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250404.0)(@libsql/client@0.14.0)(gel@2.0.0)))(embla-carousel@8.5.2)(encoding@0.1.13)(ioredis@5.6.0)(magicast@0.3.5)(sortablejs@1.15.6)(typescript@5.8.2)(vite@6.2.5(@types/node@22.8.1)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.34.1)(yaml@2.7.0))(zod@3.24.2)':
     dependencies:
       '@iconify/vue': 4.3.0(vue@3.5.13(typescript@5.8.2))
       '@internationalized/date': 3.7.0
@@ -7723,7 +7744,7 @@ snapshots:
       '@tanstack/vue-table': 8.21.2(vue@3.5.13(typescript@5.8.2))
       '@unhead/vue': 2.0.3(vue@3.5.13(typescript@5.8.2))
       '@vueuse/core': 13.0.0(vue@3.5.13(typescript@5.8.2))
-      '@vueuse/integrations': 13.0.0(change-case@5.4.4)(fuse.js@7.1.0)(vue@3.5.13(typescript@5.8.2))
+      '@vueuse/integrations': 13.0.0(change-case@5.4.4)(fuse.js@7.1.0)(sortablejs@1.15.6)(vue@3.5.13(typescript@5.8.2))
       colortranslator: 4.1.0
       consola: 3.4.2
       defu: 6.1.4
@@ -8950,7 +8971,7 @@ snapshots:
       '@vueuse/shared': 13.0.0(vue@3.5.13(typescript@5.8.2))
       vue: 3.5.13(typescript@5.8.2)
 
-  '@vueuse/integrations@13.0.0(change-case@5.4.4)(fuse.js@7.1.0)(vue@3.5.13(typescript@5.8.2))':
+  '@vueuse/integrations@13.0.0(change-case@5.4.4)(fuse.js@7.1.0)(sortablejs@1.15.6)(vue@3.5.13(typescript@5.8.2))':
     dependencies:
       '@vueuse/core': 13.0.0(vue@3.5.13(typescript@5.8.2))
       '@vueuse/shared': 13.0.0(vue@3.5.13(typescript@5.8.2))
@@ -8958,6 +8979,7 @@ snapshots:
     optionalDependencies:
       change-case: 5.4.4
       fuse.js: 7.1.0
+      sortablejs: 1.15.6
 
   '@vueuse/metadata@10.11.1': {}
 
@@ -12192,6 +12214,13 @@ snapshots:
 
   smob@1.5.0: {}
 
+  sortablejs-vue3@1.2.11(sortablejs@1.15.6)(vue@3.5.13(typescript@5.8.2)):
+    dependencies:
+      sortablejs: 1.15.6
+      vue: 3.5.13(typescript@5.8.2)
+
+  sortablejs@1.15.6: {}
+
   source-map-js@1.2.1: {}
 
   source-map-support@0.5.21:
@@ -12980,6 +13009,10 @@ snapshots:
       archiver-utils: 5.0.2
       compress-commons: 6.0.2
       readable-stream: 4.5.2
+
+  zod-validation-error@3.4.0(zod@3.24.2):
+    dependencies:
+      zod: 3.24.2
 
   zod@3.22.3: {}
 

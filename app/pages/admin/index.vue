@@ -56,6 +56,7 @@ const items = [[{
     </template>
 
     <template #body>
+      <AdminMailStats />
       <!--      <HomeStats :period="period" :range="range" /> -->
       <!--      <HomeChart :period="period" :range="range" /> -->
       <!--      <HomeSales :period="period" :range="range" /> -->
