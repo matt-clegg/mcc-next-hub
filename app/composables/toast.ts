@@ -1,5 +1,5 @@
 ﻿export function useErrorToast(title: string, description?: string) {
-  createIcon({
+  createToast({
     title,
     description,
     icon: "i-lucide-circle-alert",
@@ -8,7 +8,7 @@
 }
 
 export function useSuccessToast(title: string, description?: string) {
-  createIcon({
+  createToast({
     title,
     description,
     icon: "i-lucide-circle-check-big",
@@ -17,7 +17,7 @@ export function useSuccessToast(title: string, description?: string) {
 }
 
 export function useInfoToast(title: string, description?: string) {
-  createIcon({
+  createToast({
     title,
     description,
     icon: "i-lucide-info",
@@ -25,14 +25,14 @@ export function useInfoToast(title: string, description?: string) {
   });
 }
 
-type ToastOptions = {
+export type ToastOptions = {
   title: string;
   description?: string;
   icon?: string;
   color?: "primary" | "secondary" | "success" | "info" | "warning" | "error" | "neutral";
 };
 
-function createIcon(options: ToastOptions) {
+export function createToast(options: ToastOptions) {
   const toast = useToast();
   toast.add(options);
 }
